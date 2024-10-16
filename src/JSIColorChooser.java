@@ -17,10 +17,7 @@ public class JSIColorChooser {
 
     // constructor
     public JSIColorChooser() {
-        this.mColors = new Color[JSIColorChooser.CELL_NUM_B][];
-        for (int i = 0; i < JSIColorChooser.CELL_NUM_B; i++) {
-            this.mColors[i] = new Color[JSIColorChooser.CELL_NUM_H];
-        }
+        this.mColors = new Color[JSIColorChooser.CELL_NUM_B][JSIColorChooser.CELL_NUM_H];
         this.mSaturation = JSIColorChooser.SATURATION_DEFAULT;
         this.mOpaqueness = JSIColorChooser.OPAQUENESS_DEFAULT;
 
