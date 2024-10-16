@@ -134,6 +134,40 @@ public class JSI implements MouseListener, MouseMotionListener, KeyListener {
     }
 
     @Override
+    public void mouseDragged(MouseEvent e) {
+        Point pt = e.getPoint();
+        switch (this.mMode) {
+            case DRAW:
+                if (this.mCurPtCurve != null) {
+                    // check if the distansce between the new screen point and the last screen point is greater than the threshold.
+                    int size = this.mCurPtCurve.getPts().size();
+                    Point2D.Double lastWorldPt = this.mCurPtCurve.getPts().get(size - 1);
+                    Point lastScreenPt = this.mXform.calPtFromWorldToScreen(lastWorldPt);
+                    if (pt.distance(lastScreenPt) < JSIPtCurve.MIN_DIST_BTWN_PTS) {
+                        return;
+                    }
+                    //add the current mouse point to the current pen mark.
+                    Point2D.Double worldPt = this.mXform.calPtFromScreenToWorld(pt);
+                    this.mCurPtCurve.addPt(worldPt);
+                }
+                break;
+            case SELECT:
+                this.mSelectionBox.update(pt);
+                this.updateSelectedPtCurves();
+                break;
+            case SELECTED:
+                break;
+            case PAN:
+                this.mXform.translateTo(pt);
+                break;
+            case ZOOM_ROTATE:
+                this.mXform.zoomRotateTo(pt);
+                break;
+        }
+        this.mCanvas2D.repaint();
+    }
+
+    @Override
     public void mouseReleased(MouseEvent e) {
         switch (this.mMode) {
             case DRAW:
@@ -185,40 +219,6 @@ public class JSI implements MouseListener, MouseMotionListener, KeyListener {
     @Override
     public void mouseExited(MouseEvent e) {
         //System.out.println("mouseExited");
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        Point pt = e.getPoint();
-        switch (this.mMode) {
-            case DRAW:
-                if (this.mCurPtCurve != null) {
-                    // check if the distansce between the new screen point and the last screen point is greater than the threshold.
-                    int size = this.mCurPtCurve.getPts().size();
-                    Point2D.Double lastWorldPt = this.mCurPtCurve.getPts().get(size - 1);
-                    Point lastScreenPt = this.mXform.calPtFromWorldToScreen(lastWorldPt);
-                    if (pt.distance(lastScreenPt) < JSIPtCurve.MIN_DIST_BTWN_PTS) {
-                        return;
-                    }
-                    //add the current mouse point to the current pen mark.
-                    Point2D.Double worldPt = this.mXform.calPtFromScreenToWorld(pt);
-                    this.mCurPtCurve.addPt(worldPt);
-                }
-                break;
-            case SELECT:
-                this.mSelectionBox.update(pt);
-                this.updateSelectedPtCurves();
-                break;
-            case SELECTED:
-                break;
-            case PAN:
-                this.mXform.translateTo(pt);
-                break;
-            case ZOOM_ROTATE:
-                this.mXform.zoomRotateTo(pt);
-                break;
-        }
-        this.mCanvas2D.repaint();
     }
 
     private void updateSelectedPtCurves() {
