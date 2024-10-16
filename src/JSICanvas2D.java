@@ -135,8 +135,33 @@ public class JSICanvas2D extends JPanel {
     }
 
     private void drawSelectedPtCurve(Graphics2D g2) {
-        for (JSIPtCurve selectedPtCurve : this.mJSI.getSelectedPtCurves()) {
-            this.drawPtCurve(g2, selectedPtCurve, JSICanvas2D.COLOR_SELECTED_PT_CURVE, selectedPtCurve.getStroke());
+        if (this.mJSI.selectedPtCurvePanStartPoint == null || this.mJSI.selectedPtCurvePanEndPoint == null) {
+            for (JSIPtCurve selectedPtCurve : this.mJSI.getSelectedPtCurves()) {
+                this.drawPtCurve(g2, selectedPtCurve, JSICanvas2D.COLOR_SELECTED_PT_CURVE, selectedPtCurve.getStroke());
+            }
+        } else {
+            double dx = this.mJSI.selectedPtCurvePanEndPoint.x - this.mJSI.selectedPtCurvePanStartPoint.x;
+            double dy = this.mJSI.selectedPtCurvePanEndPoint.y - this.mJSI.selectedPtCurvePanStartPoint.y;
+
+            for (JSIPtCurve selectedPtCurve : this.mJSI.getSelectedPtCurves()) {
+                JSIPtCurve translatedCurve = new JSIPtCurve(
+                    new Point2D.Double(selectedPtCurve.getPts().get(0).x + dx, selectedPtCurve.getPts().get(0).y + dy),
+                    selectedPtCurve.getColor(),
+                    selectedPtCurve.getStroke()
+                );
+
+                // 나머지 점들도 이동 후 추가
+                for (int i = 1; i < selectedPtCurve.getPts().size(); i++) {
+                    Point2D.Double translatedPt = new Point2D.Double(
+                        selectedPtCurve.getPts().get(i).x + dx,
+                        selectedPtCurve.getPts().get(i).y + dy
+                    );
+                    translatedCurve.addPt(translatedPt);
+                }
+
+                // 이동된 곡선을 drawPtCurve에 전달
+                this.drawPtCurve(g2, translatedCurve, JSICanvas2D.COLOR_SELECTED_PT_CURVE, selectedPtCurve.getStroke());
+            }
         }
     }
 

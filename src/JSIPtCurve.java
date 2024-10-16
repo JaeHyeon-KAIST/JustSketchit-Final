@@ -55,6 +55,15 @@ public class JSIPtCurve {
         this.mBoundingBox.add(pt);
     }
 
+    public void translatePt(double dx, double dy) {
+        for (Point2D.Double pt : this.mPts) {
+            pt.x += dx;
+            pt.y += dy;
+        }
+        this.mBoundingBox.x += dx;
+        this.mBoundingBox.y += dy;
+    }
+
     public void increaseStrokeWidth(float f) {
         BasicStroke bs = (BasicStroke) this.mStroke;
         float w = bs.getLineWidth();

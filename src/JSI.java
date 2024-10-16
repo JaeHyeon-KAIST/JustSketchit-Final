@@ -49,6 +49,9 @@ public class JSI implements MouseListener, MouseMotionListener, KeyListener {
         return this.mSelectedPtCurves;
     }
 
+    public Point2D.Double selectedPtCurvePanStartPoint = null;
+    public Point2D.Double selectedPtCurvePanEndPoint = null;
+
     private JSISelectionBox mSelectionBox = null;
 
     public JSISelectionBox getSelectionBox() {
@@ -122,6 +125,7 @@ public class JSI implements MouseListener, MouseMotionListener, KeyListener {
                 this.mSelectionBox = new JSISelectionBox(pt);
                 break;
             case SELECTED:
+                this.selectedPtCurvePanStartPoint = this.mXform.calPtFromScreenToWorld(pt);
                 break;
             case PAN:
                 this.mXform.setStartScreenPt(pt);
@@ -156,6 +160,7 @@ public class JSI implements MouseListener, MouseMotionListener, KeyListener {
                 this.updateSelectedPtCurves();
                 break;
             case SELECTED:
+                this.selectedPtCurvePanEndPoint = this.mXform.calPtFromScreenToWorld(pt);
                 break;
             case PAN:
                 this.mXform.translateTo(pt);
@@ -185,6 +190,14 @@ public class JSI implements MouseListener, MouseMotionListener, KeyListener {
                 this.mSelectionBox = null;
                 break;
             case SELECTED:
+                for (JSIPtCurve ptCurve : this.mSelectedPtCurves) {
+                    ptCurve.translatePt(
+                        this.selectedPtCurvePanEndPoint.x - this.selectedPtCurvePanStartPoint.x,
+                        this.selectedPtCurvePanEndPoint.y - this.selectedPtCurvePanStartPoint.y
+                    );
+                }
+                this.selectedPtCurvePanStartPoint = null;
+                this.selectedPtCurvePanEndPoint = null;
                 break;
             case PAN:
                 this.mXform.setStartScreenPt(null);
