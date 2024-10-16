@@ -38,11 +38,20 @@ public class JSIColorChooser {
         }
     }
 
-    public void drawCells(Graphics2D g2, int w, int h) {
-        double ys = (double) h / 3.0 * 1.0;
+    private double[] calcColorGrid(int w, int h) {
+        double ys = (double) h / 3.0;
         double ye = (double) h / 3.0 * 2.0;
         double dx = (double) w / (double) JSIColorChooser.CELL_NUM_H;
         double dy = (ye - ys) / (double) JSIColorChooser.CELL_NUM_B;
+
+        return new double[]{ys, dx, dy};
+    }
+
+    public void drawCells(Graphics2D g2, int w, int h) {
+        double[] gridValue = this.calcColorGrid(w, h);
+        double ys = gridValue[0];
+        double dx = gridValue[1];
+        double dy = gridValue[2];
 
         for (int i = 0; i < JSIColorChooser.CELL_NUM_B; i++) {
             double y = ys + dy * (double) i;
@@ -56,10 +65,10 @@ public class JSIColorChooser {
     }
 
     public Color calcColor(Point pt, int w, int h) {
-        double ys = (double) h / 3.0 * 1.0;
-        double ye = (double) h / 3.0 * 2.0;
-        double dx = (double) w / (double) JSIColorChooser.CELL_NUM_H;
-        double dy = (ye - ys) / (double) JSIColorChooser.CELL_NUM_B;
+        double[] gridValue = this.calcColorGrid(w, h);
+        double ys = gridValue[0];
+        double dx = gridValue[1];
+        double dy = gridValue[2];
 
         int i = (int) ((double) (pt.y - ys) / dy);
         int j = (int) ((double) pt.x / dx);
