@@ -16,6 +16,7 @@ public class JSI implements MouseListener, MouseMotionListener, KeyListener {
     public enum Mode {
         DRAW,
         SELECT,
+        SELECTED,
         PAN,
         ZOOM_ROTATE,
         COLOR
@@ -120,6 +121,8 @@ public class JSI implements MouseListener, MouseMotionListener, KeyListener {
             case SELECT:
                 this.mSelectionBox = new JSISelectionBox(pt);
                 break;
+            case SELECTED:
+                break;
             case PAN:
                 this.mXform.setStartScreenPt(pt);
                 break;
@@ -146,6 +149,8 @@ public class JSI implements MouseListener, MouseMotionListener, KeyListener {
                 break;
             case SELECT:
                 this.mSelectionBox = null;
+                break;
+            case SELECTED:
                 break;
             case PAN:
                 this.mXform.setStartScreenPt(null);
@@ -203,6 +208,8 @@ public class JSI implements MouseListener, MouseMotionListener, KeyListener {
             case SELECT:
                 this.mSelectionBox.update(pt);
                 this.updateSelectedPtCurves();
+                break;
+            case SELECTED:
                 break;
             case PAN:
                 this.mXform.translateTo(pt);
@@ -291,33 +298,51 @@ public class JSI implements MouseListener, MouseMotionListener, KeyListener {
         int code = e.getKeyCode();
         switch (code) {
             case KeyEvent.VK_SHIFT:
-                this.mMode = JSI.Mode.DRAW;
+                if (this.mSelectedPtCurves.isEmpty()) {
+                    this.mMode = JSI.Mode.DRAW;
+                } else {
+                    this.mMode = JSI.Mode.SELECTED;
+                }
                 System.out.println("SelectionMode OFF");
                 this.mSelectionBox = null;
                 this.mCanvas2D.repaint();
                 break;
             case KeyEvent.VK_CONTROL:
-                this.mMode = JSI.Mode.DRAW;
+                if (this.mSelectedPtCurves.isEmpty()) {
+                    this.mMode = JSI.Mode.DRAW;
+                } else {
+                    this.mMode = JSI.Mode.SELECTED;
+                }
                 System.out.println("PanMode OFF");
                 break;
             case KeyEvent.VK_ESCAPE:
                 this.mPtCurves.addAll(this.mSelectedPtCurves);
                 this.mSelectedPtCurves.clear();
                 this.mCanvas2D.repaint();
+                this.mMode = JSI.Mode.DRAW;
                 break;
             case KeyEvent.VK_BACK_SPACE:
                 this.mSelectedPtCurves.clear();
                 this.mCanvas2D.repaint();
+                this.mMode = JSI.Mode.DRAW;
                 break;
             case KeyEvent.VK_ALT:
-                this.mMode = JSI.Mode.DRAW;
+                if (this.mSelectedPtCurves.isEmpty()) {
+                    this.mMode = JSI.Mode.DRAW;
+                } else {
+                    this.mMode = JSI.Mode.SELECTED;
+                }
                 System.out.println("RotateMode OFF");
                 break;
             case KeyEvent.VK_H:
                 this.mXform.home();
                 break;
             case KeyEvent.VK_C:
-                this.mMode = JSI.Mode.DRAW;
+                if (this.mSelectedPtCurves.isEmpty()) {
+                    this.mMode = JSI.Mode.DRAW;
+                } else {
+                    this.mMode = JSI.Mode.SELECTED;
+                }
                 System.out.println("ColorMode OFF");
                 break;
         }
