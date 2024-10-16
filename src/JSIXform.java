@@ -58,9 +58,9 @@ public class JSIXform {
         return worldPt;
     }
 
-    public boolean translateTo(Point pt) {
+    public void translateTo(Point pt) {
         if (this.mStartScreenPt == null) {
-            return false;
+            return;
         }
 
         this.mCurXformFromWorldToScreen.setTransform(this.mStartXformFromWorldToScreen);
@@ -76,12 +76,11 @@ public class JSIXform {
         // call whenever mCurXformFromWorldToScreen changes.
         this.updateCurXformFromScreenToWorld();
 
-        return true;
     }
 
-    public boolean zoomRotateTo(Point pt) {
+    public void zoomRotateTo(Point pt) {
         if (this.mStartScreenPt == null) {
-            return false;
+            return;
         }
 
         this.mCurXformFromWorldToScreen.setTransform(this.mStartXformFromWorldToScreen);
@@ -90,7 +89,7 @@ public class JSIXform {
 
         double d0 = JSIXform.PIVOT_Pt.distance(this.mStartScreenPt);
         if (d0 < JSIXform.MIN_START_ARM_LENGTH_FOR_SCALING) {
-            return false;
+            return;
         }
 
         double d1 = JSIXform.PIVOT_Pt.distance(pt);
@@ -113,7 +112,6 @@ public class JSIXform {
         //call whenever mCurXformFromWorldToScreen changes.
         this.updateCurXformFromScreenToWorld();
 
-        return true;
     }
 
     public void home() {
