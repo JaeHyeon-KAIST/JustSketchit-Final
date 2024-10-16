@@ -25,7 +25,6 @@ public class JSICanvas2D extends JPanel {
         5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
     private static final Stroke STROKE_SELECTION_BOX = new BasicStroke(5f);
-    private static final Stroke STROKE_SELECTED_PT_CURVE = new BasicStroke(5f);
     private static final Stroke STROKE_CROSS_HAIR = new BasicStroke(5f);
 
     private static final Font FONT_INFO = new Font("Monospaced", Font.PLAIN, 24);
