@@ -129,21 +129,21 @@ public class JSICanvas2D extends JPanel {
     }
 
     private void drawPtCurves(Graphics2D g2) {
-        for (JSIPtCurve ptCurve : this.mJSI.getPtCurves()) {
+        for (JSIPtCurve ptCurve : this.mJSI.getmPtCurveMgr().getPtCurves()) {
             this.drawPtCurve(g2, ptCurve, ptCurve.getColor(), ptCurve.getStroke());
         }
     }
 
     private void drawSelectedPtCurve(Graphics2D g2) {
-        if (this.mJSI.selectedPtCurvePanStartPoint == null || this.mJSI.selectedPtCurvePanEndPoint == null) {
-            for (JSIPtCurve selectedPtCurve : this.mJSI.getSelectedPtCurves()) {
+        if (this.mJSI.getSelectedPtCurvePanStartPoint() == null || this.mJSI.getSelectedPtCurvePanEndPoint() == null) {
+            for (JSIPtCurve selectedPtCurve : this.mJSI.getmPtCurveMgr().getSelectedPtCurves()) {
                 this.drawPtCurve(g2, selectedPtCurve, JSICanvas2D.COLOR_SELECTED_PT_CURVE, selectedPtCurve.getStroke());
             }
         } else {
-            double dx = this.mJSI.selectedPtCurvePanEndPoint.x - this.mJSI.selectedPtCurvePanStartPoint.x;
-            double dy = this.mJSI.selectedPtCurvePanEndPoint.y - this.mJSI.selectedPtCurvePanStartPoint.y;
+            double dx = this.mJSI.getSelectedPtCurvePanEndPoint().x - this.mJSI.getSelectedPtCurvePanStartPoint().x;
+            double dy = this.mJSI.getSelectedPtCurvePanEndPoint().y - this.mJSI.getSelectedPtCurvePanStartPoint().y;
 
-            for (JSIPtCurve selectedPtCurve : this.mJSI.getSelectedPtCurves()) {
+            for (JSIPtCurve selectedPtCurve : this.mJSI.getmPtCurveMgr().getSelectedPtCurves()) {
                 JSIPtCurve translatedCurve = new JSIPtCurve(
                     new Point2D.Double(selectedPtCurve.getPts().get(0).x + dx, selectedPtCurve.getPts().get(0).y + dy),
                     selectedPtCurve.getColor(),
@@ -166,7 +166,7 @@ public class JSICanvas2D extends JPanel {
     }
 
     private void drawCurPtCurve(Graphics2D g2) {
-        JSIPtCurve ptCurve = this.mJSI.getCurPtCurve();
+        JSIPtCurve ptCurve = this.mJSI.getmPtCurveMgr().getCurPtCurve();
         if (ptCurve != null) {
             this.drawPtCurve(g2, ptCurve, ptCurve.getColor(), ptCurve.getStroke());
         }
