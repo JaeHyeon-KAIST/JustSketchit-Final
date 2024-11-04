@@ -122,7 +122,7 @@ public class JSIEventListener implements MouseListener, MouseMotionListener, Key
                         for (JSIPtCurve ptCurve : mJSI.getmPtCurveMgr().getSelectedPtCurves()) {
                             ptCurve.setColor(c);
                         }
-                        mJSI.getmPtCurveMgr().getSelectedPtCurves().addAll(mJSI.getmPtCurveMgr().getSelectedPtCurves());
+                        mJSI.getmPtCurveMgr().getPtCurves().addAll(mJSI.getmPtCurveMgr().getSelectedPtCurves());
                         mJSI.getmPtCurveMgr().getSelectedPtCurves().clear();
                     }
                 }
