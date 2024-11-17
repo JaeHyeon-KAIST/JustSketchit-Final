@@ -1,5 +1,8 @@
 package jsi;
 
+import jsi.scenario.JSIZoomRotateReadyScenario;
+import jsi.scenario.JSIZoomRotateScenario;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -117,7 +120,7 @@ public class JSICanvas2D extends JPanel {
 //        if (this.mJSI.getMode() == JSIApp.Mode.ZOOM_ROTATE) {
         JSIScene curScene = (JSIScene) this.mJSI.getScenarioMgr().getCurScene();
 //        if (curScene.getScenario() == JSINavigateScenario.getSingleton()) {
-        if (false) {
+        if (curScene.getScenario() == JSIZoomRotateReadyScenario.getSingleton() || curScene.getScenario() == JSIZoomRotateScenario.getSingleton()) {
             double r = JSICanvas2D.CROSS_HAIR_RADIUS;
             Point ctr = JSIXform.PIVOT_Pt;
             Line2D hline = new Line2D.Double(ctr.x - r, ctr.y, ctr.x + r, ctr.y);
