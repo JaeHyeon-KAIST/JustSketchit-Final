@@ -1,5 +1,7 @@
 package jsi;
 
+import jsi.scenario.JSIColorReadyScenario;
+import jsi.scenario.JSIColorScenario;
 import jsi.scenario.JSIZoomRotateReadyScenario;
 import jsi.scenario.JSIZoomRotateScenario;
 
@@ -92,10 +94,9 @@ public class JSICanvas2D extends JPanel {
     }
 
     private void drawColorChooser(Graphics2D g2) {
-//        if (this.mJSI.getMode() == JSIApp.Mode.COLOR) {
         JSIScene curScene = (JSIScene) this.mJSI.getScenarioMgr().getCurScene();
 //        if (curScene.getScenario() == JSIColorScenario.getSingleton()) {
-        if (false) {
+        if (curScene.getScenario() == JSIColorReadyScenario.getSingleton() || curScene.getScenario() == JSIColorScenario.getSingleton()) {
             this.mJSI.getColorChooser().drawCells(g2, this.getWidth(), this.getHeight());
         }
     }

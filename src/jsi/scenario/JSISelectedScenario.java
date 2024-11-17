@@ -97,6 +97,9 @@ public class JSISelectedScenario extends XScenario {
                 case KeyEvent.VK_DOWN:
                     JSICmdToIncreaseStrokeWidthForCurPtCurve.execute(jsi, -JSICanvas2D.STROKE_WIDTH_INCREMENT);
                     break;
+                case KeyEvent.VK_C:
+                    XCmdToChangeScene.execute(jsi, JSIColorReadyScenario.ColorReadyScene.getSingleton(), this);
+                    break;
             }
         }
 

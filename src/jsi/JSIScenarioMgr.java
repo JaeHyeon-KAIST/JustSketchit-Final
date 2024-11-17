@@ -19,6 +19,8 @@ public class JSIScenarioMgr extends XScenarioMgr {
         this.addScenario(JSIPanScenario.createSingleton(this.mApp));
         this.addScenario(JSIZoomRotateReadyScenario.createSingleton(this.mApp));
         this.addScenario(JSIZoomRotateScenario.createSingleton(this.mApp));
+        this.addScenario(JSIColorReadyScenario.createSingleton(this.mApp));
+        this.addScenario(JSIColorScenario.createSingleton(this.mApp));
     }
 
     @Override
