@@ -11,7 +11,7 @@ public abstract class XLoggableCmd implements XExecutable {
 
     @Override
     final public boolean execute() {
-        if (this.defined()) {
+        if (this.defineCmd()) {
             this.mApp.getLogMgr().addLog(this.createLog());
             return true;
         } else {
@@ -20,7 +20,7 @@ public abstract class XLoggableCmd implements XExecutable {
     }
 
     // abstract methods
-    protected abstract boolean defined();
+    protected abstract boolean defineCmd();
 
     protected abstract String createLog();
 }

@@ -21,7 +21,7 @@ public class XCmdToChangeScene extends XLoggableCmd {
     }
 
     @Override
-    protected boolean defined() {
+    protected boolean defineCmd() {
         this.mToScene.setReturnScene(this.mReturnScene);
         this.mApp.getScenarioMgr().setCurScene(this.mToScene);
         return true;

@@ -1,12 +1,16 @@
 package jsi;
 
+import x.XApp;
+import x.XLogMgr;
+import x.XScenarioMgr;
+
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 
-public class JSI {
+public class JSIApp extends XApp {
     //introduce mode and quasi-modes.
     public enum Mode {
         DRAW,
@@ -18,15 +22,15 @@ public class JSI {
     }
 
     // fields
-    private Mode mMode = JSI.Mode.DRAW;
-
-    public Mode getMode() {
-        return this.mMode;
-    }
-
-    public void setMode(Mode mode) {
-        this.mMode = mode;
-    }
+//    private Mode mMode = JSIApp.Mode.DRAW;
+//
+//    public Mode getMode() {
+//        return this.mMode;
+//    }
+//
+//    public void setMode(Mode mode) {
+//        this.mMode = mode;
+//    }
 
     private JFrame mFrame = null;
     private JSICanvas2D mCanvas2D = null;
@@ -81,45 +85,55 @@ public class JSI {
 
     private JSIPtCurveMgr mPtCurveMgr = null;
 
-    public JSIPtCurveMgr getmPtCurveMgr() {
+    public JSIPtCurveMgr getPtCurveMgr() {
         return this.mPtCurveMgr;
     }
 
+    private XScenarioMgr mScenarioMgr = null;
+
+
+    @Override
+    public XScenarioMgr getScenarioMgr() {
+        return this.mScenarioMgr;
+    }
+
+    private XLogMgr mLogMgr = null;
+
+    @Override
+    public XLogMgr getLogMgr() {
+        return this.mLogMgr;
+    }
+
     //constructor
-    public JSI() {
-        // create a JFrame instance and make it visible.
+    public JSIApp() {
+        // create components.
+        // 1) frame, 2) canvas, 3) other components. 4) event listeners 5) managers
         this.mFrame = new JFrame("JustSketchIt");
-        this.mFrame.setSize(800, 600);
-        this.mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // create JSICanvas2D and add it to the frame.
         this.mCanvas2D = new JSICanvas2D(this);
-        this.mFrame.add(this.mCanvas2D);
-
-        // add this as a mouse listener to the canvas.
+        this.mXform = new JSIXform();
+        this.mColorChooser = new JSIColorChooser();
         this.mEventListener = new JSIEventListener(this);
+        this.mPtCurveMgr = new JSIPtCurveMgr();
+        this.mScenarioMgr = new JSIScenarioMgr(this);
+        this.mLogMgr = new XLogMgr();
+        this.mLogMgr.setPrintOn(true);
+
+        // connect event listeners.
         this.mCanvas2D.addMouseListener(this.mEventListener);
         this.mCanvas2D.addMouseMotionListener(this.mEventListener);
-        this.mCanvas2D.addKeyListener(this.mEventListener);
-
-        this.mPtCurveMgr = new JSIPtCurveMgr();
-
-        // create the transform.
-        this.mXform = new JSIXform();
-
-        //add this as a key listener to the frame.
         this.mCanvas2D.setFocusable(true);
         this.mCanvas2D.addKeyListener(this.mEventListener);
 
+        // build and show visual components.
+        this.mFrame.add(this.mCanvas2D);
+        this.mFrame.setSize(800, 600);
+        this.mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.mFrame.setVisible(true);
-
-        // create a color chooser.
-        this.mColorChooser = new JSIColorChooser();
     }
 
     public static void main(String[] args) {
         //create a JSI instance.
-        new JSI();
+        new JSIApp();
     }
 
     public void updateSelectedPtCurves() {

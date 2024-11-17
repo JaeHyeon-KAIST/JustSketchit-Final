@@ -39,7 +39,7 @@ public class JSICanvas2D extends JPanel {
     private static final Double PEN_TIP_OFFSET = 30.0;
 
     // fields
-    private JSI mJSI = null;
+    private JSIApp mJSI = null;
     private Color mCurColorForPtCurve = null;
 
     public Color getCurColorForPtCurve() {
@@ -57,7 +57,7 @@ public class JSICanvas2D extends JPanel {
     }
 
     //cons
-    public JSICanvas2D(JSI jsi) {
+    public JSICanvas2D(JSIApp jsi) {
         this.mJSI = jsi;
         this.mCurColorForPtCurve = JSICanvas2D.COLOR_PT_CURVE_DEFAULT;
         this.mCurStrokeForPtCurve = JSICanvas2D.STROKE_PT_CURVE_DEFAULT;
@@ -89,7 +89,10 @@ public class JSICanvas2D extends JPanel {
     }
 
     private void drawColorChooser(Graphics2D g2) {
-        if (this.mJSI.getMode() == JSI.Mode.COLOR) {
+//        if (this.mJSI.getMode() == JSIApp.Mode.COLOR) {
+        JSIScene curScene = (JSIScene) this.mJSI.getScenarioMgr().getCurScene();
+//        if (curScene.getScenario() == JSIColorScenario.getSingleton()) {
+        if (false) {
             this.mJSI.getColorChooser().drawCells(g2, this.getWidth(), this.getHeight());
         }
     }
@@ -111,7 +114,10 @@ public class JSICanvas2D extends JPanel {
     }
 
     private void drawCrossHair(Graphics2D g2) {
-        if (this.mJSI.getMode() == JSI.Mode.ZOOM_ROTATE) {
+//        if (this.mJSI.getMode() == JSIApp.Mode.ZOOM_ROTATE) {
+        JSIScene curScene = (JSIScene) this.mJSI.getScenarioMgr().getCurScene();
+//        if (curScene.getScenario() == JSINavigateScenario.getSingleton()) {
+        if (false) {
             double r = JSICanvas2D.CROSS_HAIR_RADIUS;
             Point ctr = JSIXform.PIVOT_Pt;
             Line2D hline = new Line2D.Double(ctr.x - r, ctr.y, ctr.x + r, ctr.y);
@@ -124,28 +130,30 @@ public class JSICanvas2D extends JPanel {
     }
 
     private void drawInfo(Graphics2D g2) {
-        String str = String.valueOf(this.mJSI.getMode());
+//        String str = String.valueOf(this.mJSI.getMode());
+        JSIScene curScene = (JSIScene) this.mJSI.getScenarioMgr().getCurScene();
+        String str = curScene.getClass().getSimpleName();
         g2.setColor(JSICanvas2D.COLOR_INFO);
         g2.setFont(JSICanvas2D.FONT_INFO);
         g2.drawString(str, JSICanvas2D.INFO_TOP_ALIGNMENT_X, JSICanvas2D.INFO_TOP_ALIGNMENT_Y);
     }
 
     private void drawPtCurves(Graphics2D g2) {
-        for (JSIPtCurve ptCurve : this.mJSI.getmPtCurveMgr().getPtCurves()) {
+        for (JSIPtCurve ptCurve : this.mJSI.getPtCurveMgr().getPtCurves()) {
             this.drawPtCurve(g2, ptCurve, ptCurve.getColor(), ptCurve.getStroke());
         }
     }
 
     private void drawSelectedPtCurve(Graphics2D g2) {
         if (this.mJSI.getSelectedPtCurvePanStartPoint() == null || this.mJSI.getSelectedPtCurvePanEndPoint() == null) {
-            for (JSIPtCurve selectedPtCurve : this.mJSI.getmPtCurveMgr().getSelectedPtCurves()) {
+            for (JSIPtCurve selectedPtCurve : this.mJSI.getPtCurveMgr().getSelectedPtCurves()) {
                 this.drawPtCurve(g2, selectedPtCurve, JSICanvas2D.COLOR_SELECTED_PT_CURVE, selectedPtCurve.getStroke());
             }
         } else {
             double dx = this.mJSI.getSelectedPtCurvePanEndPoint().x - this.mJSI.getSelectedPtCurvePanStartPoint().x;
             double dy = this.mJSI.getSelectedPtCurvePanEndPoint().y - this.mJSI.getSelectedPtCurvePanStartPoint().y;
 
-            for (JSIPtCurve selectedPtCurve : this.mJSI.getmPtCurveMgr().getSelectedPtCurves()) {
+            for (JSIPtCurve selectedPtCurve : this.mJSI.getPtCurveMgr().getSelectedPtCurves()) {
                 JSIPtCurve translatedCurve = new JSIPtCurve(
                     new Point2D.Double(selectedPtCurve.getPts().get(0).x + dx, selectedPtCurve.getPts().get(0).y + dy),
                     selectedPtCurve.getColor(),
@@ -168,7 +176,7 @@ public class JSICanvas2D extends JPanel {
     }
 
     private void drawCurPtCurve(Graphics2D g2) {
-        JSIPtCurve ptCurve = this.mJSI.getmPtCurveMgr().getCurPtCurve();
+        JSIPtCurve ptCurve = this.mJSI.getPtCurveMgr().getCurPtCurve();
         if (ptCurve != null) {
             this.drawPtCurve(g2, ptCurve, ptCurve.getColor(), ptCurve.getStroke());
         }
