@@ -33,8 +33,6 @@ public class JSICmdToUpdateSelectedPtCurves extends XLoggableCmd {
         Shape worldSelectionBoxShape = at.createTransformedShape(jsi.getSelectionBox());
 
         ArrayList<JSIPtCurve> newlySelectedPtCurves = new ArrayList<JSIPtCurve>();
-        System.out.println(jsi.getPtCurveMgr().getPtCurves().size());
-        System.out.println(jsi.getPtCurveMgr().getSelectedPtCurves().size());
         for (JSIPtCurve ptCurve : jsi.getPtCurveMgr().getPtCurves()) {
             if (worldSelectionBoxShape.intersects(ptCurve.getBounds()) || ptCurve.getBounds().isEmpty()) {
                 for (Point2D.Double pt : ptCurve.getPts()) {

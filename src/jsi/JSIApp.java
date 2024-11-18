@@ -4,10 +4,7 @@ import x.XApp;
 import x.XLogMgr;
 import x.XScenarioMgr;
 
-import java.awt.Shape;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 import javax.swing.JFrame;
 
 public class JSIApp extends XApp {
@@ -22,16 +19,6 @@ public class JSIApp extends XApp {
     }
 
     // fields
-//    private Mode mMode = JSIApp.Mode.DRAW;
-//
-//    public Mode getMode() {
-//        return this.mMode;
-//    }
-//
-//    public void setMode(Mode mode) {
-//        this.mMode = mode;
-//    }
-
     private JFrame mFrame = null;
     private JSICanvas2D mCanvas2D = null;
 
@@ -134,26 +121,5 @@ public class JSIApp extends XApp {
     public static void main(String[] args) {
         //create a JSI instance.
         new JSIApp();
-    }
-
-    public void updateSelectedPtCurves() {
-        AffineTransform at = this.mXform.getCurXformFromScreenToWorld();
-        Shape worldSelectionBoxShape = at.createTransformedShape(this.mSelectionBox);
-
-        ArrayList<JSIPtCurve> newlySelectedPtCurves = new ArrayList<JSIPtCurve>();
-        for (JSIPtCurve ptCurve : this.mPtCurveMgr.getPtCurves()) {
-            //if(this.mSelectionBox.intersects(ptCurve.getBounds()) || ptCurve.getBounds().isEmpty()) {
-            if (worldSelectionBoxShape.intersects(ptCurve.getBounds()) || ptCurve.getBounds().isEmpty()) {
-                for (Point2D.Double pt : ptCurve.getPts()) {
-                    //if (this.mSelectionBox.contains(pt)) {
-                    if (worldSelectionBoxShape.contains(pt)) {
-                        newlySelectedPtCurves.add(ptCurve);
-                        break;
-                    }
-                }
-            }
-        }
-        mPtCurveMgr.getPtCurves().removeAll(newlySelectedPtCurves);
-        mPtCurveMgr.getSelectedPtCurves().addAll(newlySelectedPtCurves);
     }
 }

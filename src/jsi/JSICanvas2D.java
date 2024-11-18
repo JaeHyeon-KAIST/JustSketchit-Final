@@ -118,9 +118,7 @@ public class JSICanvas2D extends JPanel {
     }
 
     private void drawCrossHair(Graphics2D g2) {
-//        if (this.mJSI.getMode() == JSIApp.Mode.ZOOM_ROTATE) {
         JSIScene curScene = (JSIScene) this.mJSI.getScenarioMgr().getCurScene();
-//        if (curScene.getScenario() == JSINavigateScenario.getSingleton()) {
         if (curScene.getScenario() == JSIZoomRotateReadyScenario.getSingleton() || curScene.getScenario() == JSIZoomRotateScenario.getSingleton()) {
             double r = JSICanvas2D.CROSS_HAIR_RADIUS;
             Point ctr = JSIXform.PIVOT_Pt;
@@ -134,7 +132,6 @@ public class JSICanvas2D extends JPanel {
     }
 
     private void drawInfo(Graphics2D g2) {
-//        String str = String.valueOf(this.mJSI.getMode());
         JSIScene curScene = (JSIScene) this.mJSI.getScenarioMgr().getCurScene();
         String str = curScene.getClass().getSimpleName();
         g2.setColor(JSICanvas2D.COLOR_INFO);
