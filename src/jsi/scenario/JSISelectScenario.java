@@ -1,7 +1,9 @@
 package jsi.scenario;
 
 import jsi.JSIApp;
+import jsi.JSICanvas2D;
 import jsi.JSIScene;
+import jsi.JSISelectionBox;
 import jsi.cmd.JSICmdToDestroySelectionBox;
 import jsi.cmd.JSICmdToUpdateSelectedPtCurves;
 import jsi.cmd.JSICmdToUpdateSelectionBox;
@@ -107,7 +109,8 @@ public class JSISelectScenario extends XScenario {
 
         @Override
         public void renderScreenObjects(Graphics2D g2) {
-
+            JSISelectScenario scenario = (JSISelectScenario) this.mScenario;
+            scenario.drawSelectionBox(g2);
         }
 
         @Override
@@ -118,6 +121,25 @@ public class JSISelectScenario extends XScenario {
         @Override
         public void wrapUp() {
 
+        }
+    }
+
+    // fields
+    private JSISelectionBox mSelectionBox = null;
+
+    public JSISelectionBox getSelectionBox() {
+        return this.mSelectionBox;
+    }
+
+    public void setSelectionBox(JSISelectionBox selectionBox) {
+        this.mSelectionBox = selectionBox;
+    }
+
+    public void drawSelectionBox(Graphics2D g2) {
+        if (this.getSelectionBox() != null) {
+            g2.setColor(JSICanvas2D.COLOR_SELECTION_BOX);
+            g2.setStroke(JSICanvas2D.STROKE_SELECTION_BOX);
+            g2.draw(this.getSelectionBox());
         }
     }
 }

@@ -46,16 +46,6 @@ public class JSIApp extends XApp {
         this.selectedPtCurvePanEndPoint = pt;
     }
 
-    private JSISelectionBox mSelectionBox = null;
-
-    public JSISelectionBox getSelectionBox() {
-        return this.mSelectionBox;
-    }
-
-    public void setSelectionBox(JSISelectionBox selectionBox) {
-        this.mSelectionBox = selectionBox;
-    }
-
     private JSIXform mXform = null;
 
     public JSIXform getXform() {

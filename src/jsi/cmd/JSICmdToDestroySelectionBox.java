@@ -1,6 +1,6 @@
 package jsi.cmd;
 
-import jsi.JSIApp;
+import jsi.scenario.JSISelectScenario;
 import x.XApp;
 import x.XLoggableCmd;
 
@@ -21,8 +21,7 @@ public class JSICmdToDestroySelectionBox extends XLoggableCmd {
 
     @Override
     protected boolean defineCmd() {
-        JSIApp jsi = (JSIApp) this.mApp;
-        jsi.setSelectionBox(null);
+        JSISelectScenario.getSingleton().setSelectionBox(null);
         return true;
     }
 

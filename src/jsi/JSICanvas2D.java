@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 
 public class JSICanvas2D extends JPanel {
     //constants
-    private static final Color COLOR_SELECTION_BOX = new Color(255, 0, 0, 64);
+    public static final Color COLOR_SELECTION_BOX = new Color(255, 0, 0, 64);
     private static final Color COLOR_SELECTED_PT_CURVE = Color.ORANGE;
     private static final Color COLOR_INFO = new Color(255, 0, 0, 128);
     private static final Color COLOR_CROSS_HAIR = new Color(225, 0, 0, 64);
@@ -31,7 +31,7 @@ public class JSICanvas2D extends JPanel {
     private static final Stroke STROKE_PT_CURVE_DEFAULT = new BasicStroke(
         5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
-    private static final Stroke STROKE_SELECTION_BOX = new BasicStroke(5f);
+    public static final Stroke STROKE_SELECTION_BOX = new BasicStroke(5f);
     private static final Stroke STROKE_CROSS_HAIR = new BasicStroke(5f);
 
     private static final Font FONT_INFO = new Font("Monospaced", Font.PLAIN, 24);
@@ -84,13 +84,22 @@ public class JSICanvas2D extends JPanel {
         this.drawSelectedPtCurve(g2);
         this.drawCurPtCurve(g2);
 
+        // render the current scene's world objects
+        JSIScene curScene = (JSIScene) this.mJSI.getScenarioMgr().getCurScene();
+        curScene.renderWorldObjects(g2);
+
         // transform the coordinate system from world to screen.
         g2.transform(this.mJSI.getXform().getCurXformFromScreenToWorld());
-        this.drawSelectionBox(g2);
+
+        // render common screen objects
+//        this.drawSelectionBox(g2);
         this.drawCrossHair(g2);
         this.drawColorChooser(g2);
         this.drawPenTip(g2);
         this.drawInfo(g2);
+
+        // render current scene's screen objects
+        curScene.renderScreenObjects(g2);
     }
 
     private void drawColorChooser(Graphics2D g2) {
@@ -208,14 +217,6 @@ public class JSICanvas2D extends JPanel {
 //            Ellipse2D e = new Ellipse2D.Double(pt.x - r, pt.y - r, 2.0 * r, 2.0 * r);
 //            g2.fill(e);
 //        }
-    }
-
-    private void drawSelectionBox(Graphics2D g2) {
-        if (this.mJSI.getSelectionBox() != null) {
-            g2.setColor(JSICanvas2D.COLOR_SELECTION_BOX);
-            g2.setStroke(JSICanvas2D.STROKE_SELECTION_BOX);
-            g2.draw(this.mJSI.getSelectionBox());
-        }
     }
 
     public void increaseStrokeWidthForCurPtCurve(float f) {

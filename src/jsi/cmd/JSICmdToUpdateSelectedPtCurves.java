@@ -2,8 +2,10 @@ package jsi.cmd;
 
 import jsi.JSIApp;
 import jsi.JSIPtCurve;
+import jsi.scenario.JSISelectScenario;
 import x.XApp;
 import x.XLoggableCmd;
+
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -30,7 +32,7 @@ public class JSICmdToUpdateSelectedPtCurves extends XLoggableCmd {
         JSIApp jsi = (JSIApp) this.mApp;
 
         AffineTransform at = jsi.getXform().getCurXformFromScreenToWorld();
-        Shape worldSelectionBoxShape = at.createTransformedShape(jsi.getSelectionBox());
+        Shape worldSelectionBoxShape = at.createTransformedShape(JSISelectScenario.getSingleton().getSelectionBox());
 
         ArrayList<JSIPtCurve> newlySelectedPtCurves = new ArrayList<JSIPtCurve>();
         for (JSIPtCurve ptCurve : jsi.getPtCurveMgr().getPtCurves()) {

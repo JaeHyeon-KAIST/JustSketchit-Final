@@ -1,7 +1,7 @@
 package jsi.cmd;
 
-import jsi.JSIApp;
 import jsi.JSISelectionBox;
+import jsi.scenario.JSISelectScenario;
 import x.XApp;
 import x.XLoggableCmd;
 
@@ -26,8 +26,8 @@ public class JSICmdToCreateSelectionBox extends XLoggableCmd {
 
     @Override
     protected boolean defineCmd() {
-        JSIApp jsi = (JSIApp) this.mApp;
-        jsi.setSelectionBox(new JSISelectionBox(this.mScreenPt));
+        JSISelectionBox selectionBox = new JSISelectionBox(this.mScreenPt);
+        JSISelectScenario.getSingleton().setSelectionBox(selectionBox);
         return true;
     }
 
