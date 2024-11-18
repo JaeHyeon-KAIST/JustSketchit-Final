@@ -2,6 +2,7 @@ package jsi.scenario;
 
 import jsi.JSIApp;
 import jsi.JSICanvas2D;
+import jsi.JSIPtCurve;
 import jsi.JSIScene;
 import jsi.cmd.JSICmdToCreateCurPtCurve;
 import jsi.cmd.JSICmdToHome;
@@ -13,6 +14,7 @@ import x.XScenario;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class JSISelectedScenario extends XScenario {
     // singleton pattern
@@ -108,6 +110,14 @@ public class JSISelectedScenario extends XScenario {
             JSIApp jsi = (JSIApp) this.mScenario.getApp();
             int code = e.getKeyCode();
             switch (code) {
+                case KeyEvent.VK_ESCAPE:
+                    ArrayList<JSIPtCurve> selectedPtCurve = jsi.getPtCurveMgr().getSelectedPtCurves();
+                    for (JSIPtCurve ptCurve : selectedPtCurve) {
+                        jsi.getPtCurveMgr().getPtCurves().addAll(selectedPtCurve);
+                    }
+                    jsi.getPtCurveMgr().getSelectedPtCurves().clear();
+                    XCmdToChangeScene.execute(jsi, JSISelectReadyScenario.SelectReadyScene.getSingleton(), null);
+                    break;
                 case KeyEvent.VK_H:
                     JSICmdToHome.execute(jsi);
                     break;
