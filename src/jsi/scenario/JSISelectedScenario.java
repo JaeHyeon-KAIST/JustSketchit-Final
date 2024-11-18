@@ -116,7 +116,7 @@ public class JSISelectedScenario extends XScenario {
                         jsi.getPtCurveMgr().getPtCurves().addAll(selectedPtCurve);
                     }
                     jsi.getPtCurveMgr().getSelectedPtCurves().clear();
-                    XCmdToChangeScene.execute(jsi, JSISelectReadyScenario.SelectReadyScene.getSingleton(), null);
+                    XCmdToChangeScene.execute(jsi, JSIDefaultScenario.ReadyScene.getSingleton(), null);
                     break;
                 case KeyEvent.VK_H:
                     JSICmdToHome.execute(jsi);
