@@ -89,10 +89,10 @@ public class JSIDefaultScenario extends XScenario {
                     XCmdToChangeScene.execute(jsi, JSISelectReadyScenario.SelectReadyScene.getSingleton(), this);
                     break;
                 case KeyEvent.VK_CONTROL:
-                    XCmdToChangeScene.execute(jsi, JSIPanReadyScenario.PanReadyScene.getSingleton(), this);
+                    XCmdToChangeScene.execute(jsi, JSINavigateScenario.PanReadyScene.getSingleton(), this);
                     break;
                 case KeyEvent.VK_ALT:
-                    XCmdToChangeScene.execute(jsi, JSIZoomRotateReadyScenario.ZoomRotateReadyScene.getSingleton(), this);
+                    XCmdToChangeScene.execute(jsi, JSINavigateScenario.ZoomRotateReadyScene.getSingleton(), this);
                     break;
                 case KeyEvent.VK_UP:
                     JSICmdToIncreaseStrokeWidthForCurPtCurve.execute(jsi, JSICanvas2D.STROKE_WIDTH_INCREMENT);
@@ -101,7 +101,7 @@ public class JSIDefaultScenario extends XScenario {
                     JSICmdToIncreaseStrokeWidthForCurPtCurve.execute(jsi, -JSICanvas2D.STROKE_WIDTH_INCREMENT);
                     break;
                 case KeyEvent.VK_C:
-                    XCmdToChangeScene.execute(jsi, JSIColorReadyScenario.ColorReadyScene.getSingleton(), this);
+                    XCmdToChangeScene.execute(jsi, JSIColorScenario.ColorReadyScene.getSingleton(), this);
                     break;
             }
         }

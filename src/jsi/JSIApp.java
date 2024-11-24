@@ -60,6 +60,12 @@ public class JSIApp extends XApp {
 
     private JSIEventListener mEventListener = null;
 
+    private JSIPenMarkMgr mPenMarkMgr = null;
+
+    public JSIPenMarkMgr getPenMarkMgr() {
+        return this.mPenMarkMgr;
+    }
+
     private JSIPtCurveMgr mPtCurveMgr = null;
 
     public JSIPtCurveMgr getPtCurveMgr() {
@@ -90,6 +96,7 @@ public class JSIApp extends XApp {
         this.mXform = new JSIXform();
         this.mColorChooser = new JSIColorChooser();
         this.mEventListener = new JSIEventListener(this);
+        this.mPenMarkMgr = new JSIPenMarkMgr();
         this.mPtCurveMgr = new JSIPtCurveMgr();
         this.mScenarioMgr = new JSIScenarioMgr(this);
         this.mLogMgr = new XLogMgr();

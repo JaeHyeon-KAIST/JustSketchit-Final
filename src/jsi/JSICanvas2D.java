@@ -1,9 +1,7 @@
 package jsi;
 
-import jsi.scenario.JSIColorReadyScenario;
 import jsi.scenario.JSIColorScenario;
-import jsi.scenario.JSIZoomRotateReadyScenario;
-import jsi.scenario.JSIZoomRotateScenario;
+import jsi.scenario.JSINavigateScenario;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -25,20 +23,20 @@ public class JSICanvas2D extends JPanel {
     public static final Color COLOR_SELECTION_BOX = new Color(255, 0, 0, 64);
     private static final Color COLOR_SELECTED_PT_CURVE = Color.ORANGE;
     private static final Color COLOR_INFO = new Color(255, 0, 0, 128);
-    private static final Color COLOR_CROSS_HAIR = new Color(225, 0, 0, 64);
+    public static final Color COLOR_CROSS_HAIR = new Color(225, 0, 0, 64);
     private static final Color COLOR_PT_CURVE_DEFAULT = new Color(0, 0, 0, 192);
 
     private static final Stroke STROKE_PT_CURVE_DEFAULT = new BasicStroke(
         5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
     public static final Stroke STROKE_SELECTION_BOX = new BasicStroke(5f);
-    private static final Stroke STROKE_CROSS_HAIR = new BasicStroke(5f);
+    public static final Stroke STROKE_CROSS_HAIR = new BasicStroke(5f);
 
     private static final Font FONT_INFO = new Font("Monospaced", Font.PLAIN, 24);
 
     private static final float INFO_TOP_ALIGNMENT_X = 20;
     private static final float INFO_TOP_ALIGNMENT_Y = 30;
-    private static final double CROSS_HAIR_RADIUS = 30.0;
+    public static final double CROSS_HAIR_RADIUS = 30.0;
     public static final float STROKE_WIDTH_INCREMENT = 1f;
     public static final float STROKE_MIN_WIDTH = 1f;
     private static final Double PEN_TIP_OFFSET = 30.0;
@@ -105,7 +103,7 @@ public class JSICanvas2D extends JPanel {
     private void drawColorChooser(Graphics2D g2) {
         JSIScene curScene = (JSIScene) this.mJSI.getScenarioMgr().getCurScene();
 //        if (curScene.getScenario() == JSIColorScenario.getSingleton()) {
-        if (curScene.getScenario() == JSIColorReadyScenario.getSingleton() || curScene.getScenario() == JSIColorScenario.getSingleton()) {
+        if (curScene.getScenario() == JSIColorScenario.getSingleton()) {
             this.mJSI.getColorChooser().drawCells(g2, this.getWidth(), this.getHeight());
         }
     }
@@ -128,7 +126,7 @@ public class JSICanvas2D extends JPanel {
 
     private void drawCrossHair(Graphics2D g2) {
         JSIScene curScene = (JSIScene) this.mJSI.getScenarioMgr().getCurScene();
-        if (curScene.getScenario() == JSIZoomRotateReadyScenario.getSingleton() || curScene.getScenario() == JSIZoomRotateScenario.getSingleton()) {
+        if (curScene.getScenario() == JSINavigateScenario.getSingleton()) {
             double r = JSICanvas2D.CROSS_HAIR_RADIUS;
             Point ctr = JSIXform.PIVOT_Pt;
             Line2D hline = new Line2D.Double(ctr.x - r, ctr.y, ctr.x + r, ctr.y);

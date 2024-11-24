@@ -32,7 +32,80 @@ public class JSIColorScenario extends XScenario {
 
     @Override
     protected void addScenes() {
+        this.addScene(ColorReadyScene.createSingleton(this));
         this.addScene(ColorScene.createSingleton(this));
+    }
+
+    public static class ColorReadyScene extends JSIScene {
+        //  singleton
+        private static ColorReadyScene mSingleton = null;
+
+        public static ColorReadyScene getSingleton() {
+            assert (ColorReadyScene.mSingleton != null);
+            return ColorReadyScene.mSingleton;
+        }
+
+        public static ColorReadyScene createSingleton(XScenario scenario) {
+            assert (ColorReadyScene.mSingleton == null);
+            ColorReadyScene.mSingleton = new ColorReadyScene(scenario);
+            return ColorReadyScene.mSingleton;
+        }
+
+        private ColorReadyScene(XScenario scenario) {
+            super(scenario);
+        }
+
+        @Override
+        public void handleMousePress(MouseEvent e) {
+            JSIApp jsi = (JSIApp) this.mScenario.getApp();
+            XCmdToChangeScene.execute(jsi, JSIColorScenario.ColorScene.getSingleton(), this.mReturnScene);
+        }
+
+        @Override
+        public void handleMouseDrag(MouseEvent e) {
+        }
+
+        @Override
+        public void handleMouseRelease(MouseEvent e) {
+        }
+
+        @Override
+        public void handleKeyDown(KeyEvent e) {
+        }
+
+        @Override
+        public void handleKeyUp(KeyEvent e) {
+            JSIApp jsi = (JSIApp) this.mScenario.getApp();
+            int code = e.getKeyCode();
+            if (code == KeyEvent.VK_C) {
+                XCmdToChangeScene.execute(jsi, this.mReturnScene, null);
+            }
+        }
+
+        @Override
+        public void updateSupportObjects() {
+
+        }
+
+        @Override
+        public void renderWorldObjects(Graphics2D g2) {
+
+        }
+
+        @Override
+        public void renderScreenObjects(Graphics2D g2) {
+
+        }
+
+        @Override
+        public void getReady() {
+
+        }
+
+        @Override
+        public void wrapUp() {
+
+        }
     }
 
     public static class ColorScene extends JSIScene {
@@ -84,9 +157,9 @@ public class JSIColorScenario extends XScenario {
                     jsi.getPtCurveMgr().getPtCurves().addAll(jsi.getPtCurveMgr().getSelectedPtCurves());
                     jsi.getPtCurveMgr().getSelectedPtCurves().clear();
                 }
-                XCmdToChangeScene.execute(jsi, JSIColorReadyScenario.ColorReadyScene.getSingleton(), JSIDefaultScenario.ReadyScene.getSingleton());
+                XCmdToChangeScene.execute(jsi, JSIColorScenario.ColorReadyScene.getSingleton(), JSIDefaultScenario.ReadyScene.getSingleton());
             } else {
-                XCmdToChangeScene.execute(jsi, JSIColorReadyScenario.ColorReadyScene.getSingleton(), this.mReturnScene);
+                XCmdToChangeScene.execute(jsi, JSIColorScenario.ColorReadyScene.getSingleton(), this.mReturnScene);
             }
 
         }
